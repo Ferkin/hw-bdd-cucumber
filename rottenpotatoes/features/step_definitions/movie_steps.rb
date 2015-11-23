@@ -1,11 +1,28 @@
 # Add a declarative step here for populating the DB with movies.
 
+# movies = [{:title => "Aladdin", :rating => "G", :description => "too sad", :release_date => "25-Nov-1992"},
+#           {:title => "The Terminator", :rating => "R", :description => "not better thant the first", :release_date => "26-Oct-1984"},
+#           {:title => "When Harry Met Sally", :rating => "R", :description => "even worse", :release_date => "21-Jul-1989"},
+#           {:title => "The Help", :rating => "R", :description => "seriousely?", :release_date => "10-Aug-2011"},
+#           {:title => "Chocolat", :rating => "PG-13", :description => "seriousely?", :release_date => "10-Aug-2011"},
+#           {:title => "Amelie", :rating => "PG-13", :description => "seriousely?", :release_date => "10-Aug-2011"},
+#           {:title => "2001: A Space Odyssey", :rating => "R", :description => "seriousely?", :release_date => "10-Aug-2011"},
+#           {:title => "The Incredibles", :rating => "G", :description => "seriousely?", :release_date => "10-Aug-2011"},
+#           {:title => "Raiders of the Lost Ark", :rating => "PG", :description => "seriousely?", :release_date => "10-Aug-2011"},
+#           {:title => "Chicken Run", :rating => "PG-13", :description => "seriousely?", :release_date => "10-Aug-2011"}
+#           ]
+          
+# movies.each do |film|
+#   Movie.create(title: film[:title], rating: film[:rating], description: film[:description], release_date: film[:release_date])
+# end
+
 Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
     # each returned element will be a hash whose key is the table header.
     # you should arrange to add that movie to the database here.
+    Movie.create(movie)
   end
-  fail "Unimplemented"
+  
 end
 
 # Make sure that one string (regexp) occurs before or after another one
@@ -22,10 +39,14 @@ end
 #  "When I check the following ratings: G"
 
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
+  rating_list.split(//).each do |rating|
+    rating.stripe!
+    step "I check #{rating}"
+  end
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  fail "Unimplemented"
+  
 end
 
 Then /I should see all the movies/ do

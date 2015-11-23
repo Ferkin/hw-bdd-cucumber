@@ -22,6 +22,22 @@ Background: movies have been added to database
   And  I am on the RottenPotatoes home page
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
+
+  uncheck('ratings_G')
+  uncheck('ratings_PG-13')
+  submit_form 'ratings_submit'
+  assert page.has_content?("The Terminator")
+  assert page.has_content?("Aladin")
+  
+  
+  #When I check the following ratings: 'PG' , 'R'
+  #And I uncheck the following ratings: 'PG-13' , 'G'
+  # And I press 'Refresh'
+  # Then I should see "The Terminator" #, 'When Harry Met Sally', 'Amelie', 'The Incredibles', 'Raiders of the Lost Ark'
+  # And i should not see "Aladin"
+  # uncheck('ratings_G')
+  # uncheck('ratings_PG-13')
+
   # enter step(s) to check the 'PG' and 'R' checkboxes
   # enter step(s) to uncheck all other checkboxes
   # enter step to "submit" the search form on the homepage
